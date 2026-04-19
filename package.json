@@ -1,0 +1,23 @@
+{
+  "name": "a2e-skills",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Knowledge-base repo (skills, docs, prompts, templates) for LLM agents; index is CI-regenerated.",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "gen-index": "tsx tools/gen-index.ts",
+    "check": "tsx tools/gen-index.ts --check",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "gray-matter": "^4.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.0",
+    "typescript": "^5.6.0",
+    "tsx": "^4.19.0"
+  }
+}

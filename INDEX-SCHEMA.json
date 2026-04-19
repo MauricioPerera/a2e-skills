@@ -1,0 +1,207 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://a2e.dev/schemas/index-schema.json",
+  "title": "a2e-skills index schema",
+  "description": "Schemas for frontmatter (author-side) and index artifacts (CI-side).",
+
+  "definitions": {
+
+    "NameIdentifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,62}$"
+    },
+
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+
+    "GitBlobSha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+
+    "ArgSpec": {
+      "type": "object",
+      "required": ["name", "type", "required"],
+      "properties": {
+        "name":        { "type": "string", "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$" },
+        "type":        { "type": "string", "enum": ["string", "number", "boolean", "path"] },
+        "required":    { "type": "boolean" },
+        "description": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "InputVarSpec": {
+      "type": "object",
+      "required": ["name", "required"],
+      "properties": {
+        "name":        { "type": "string", "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$" },
+        "required":    { "type": "boolean" },
+        "description": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "SkillFrontmatter": {
+      "type": "object",
+      "required": ["name", "when_to_use", "description", "entry", "args", "requires"],
+      "properties": {
+        "name":         { "$ref": "#/definitions/NameIdentifier" },
+        "when_to_use":  { "type": "string", "minLength": 1 },
+        "description":  { "type": "string", "minLength": 1 },
+        "entry":        { "type": "string", "pattern": "^[^/\\\\][^\\\\]*$" },
+        "args":         { "type": "array", "items": { "$ref": "#/definitions/ArgSpec" } },
+        "requires":     { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+
+    "DocFrontmatter": {
+      "type": "object",
+      "required": ["name", "title", "summary"],
+      "properties": {
+        "name":    { "$ref": "#/definitions/NameIdentifier" },
+        "title":   { "type": "string", "minLength": 1 },
+        "summary": { "type": "string", "minLength": 1 },
+        "topics":  { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+
+    "PromptFrontmatter": {
+      "type": "object",
+      "required": ["name", "purpose", "description", "input_vars"],
+      "properties": {
+        "name":        { "$ref": "#/definitions/NameIdentifier" },
+        "purpose":     { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "input_vars":  { "type": "array", "items": { "$ref": "#/definitions/InputVarSpec" } }
+      },
+      "additionalProperties": false
+    },
+
+    "TemplateFrontmatter": {
+      "type": "object",
+      "required": ["name", "purpose", "format", "description"],
+      "properties": {
+        "name":        { "$ref": "#/definitions/NameIdentifier" },
+        "purpose":     { "type": "string", "minLength": 1 },
+        "format":      { "type": "string", "enum": ["markdown", "html", "json", "yaml", "sql", "text"] },
+        "description": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+
+    "SkillEntry": {
+      "type": "object",
+      "required": [
+        "name", "when_to_use", "description",
+        "skill_path", "entry", "entry_path", "entry_sha", "entry_bytes",
+        "estimated_tokens", "args", "requires"
+      ],
+      "properties": {
+        "name":             { "$ref": "#/definitions/NameIdentifier" },
+        "when_to_use":      { "type": "string" },
+        "description":      { "type": "string" },
+        "skill_path":       { "type": "string" },
+        "entry":            { "type": "string" },
+        "entry_path":       { "type": "string" },
+        "entry_sha":        { "$ref": "#/definitions/GitBlobSha" },
+        "entry_bytes":      { "type": "integer", "minimum": 0 },
+        "estimated_tokens": { "type": "integer", "minimum": 0 },
+        "args":             { "type": "array", "items": { "$ref": "#/definitions/ArgSpec" } },
+        "requires":         { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+
+    "DocEntry": {
+      "type": "object",
+      "required": ["name", "title", "summary", "path", "body_sha", "bytes", "estimated_tokens"],
+      "properties": {
+        "name":             { "$ref": "#/definitions/NameIdentifier" },
+        "title":            { "type": "string" },
+        "summary":          { "type": "string" },
+        "topics":           { "type": "array", "items": { "type": "string" } },
+        "path":             { "type": "string" },
+        "body_sha":         { "$ref": "#/definitions/GitBlobSha" },
+        "bytes":            { "type": "integer", "minimum": 0 },
+        "estimated_tokens": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+
+    "PromptEntry": {
+      "type": "object",
+      "required": ["name", "purpose", "description", "input_vars", "path", "body_sha", "bytes", "estimated_tokens"],
+      "properties": {
+        "name":             { "$ref": "#/definitions/NameIdentifier" },
+        "purpose":          { "type": "string" },
+        "description":      { "type": "string" },
+        "input_vars":       { "type": "array", "items": { "$ref": "#/definitions/InputVarSpec" } },
+        "path":             { "type": "string" },
+        "body_sha":         { "$ref": "#/definitions/GitBlobSha" },
+        "bytes":            { "type": "integer", "minimum": 0 },
+        "estimated_tokens": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+
+    "TemplateEntry": {
+      "type": "object",
+      "required": ["name", "purpose", "format", "description", "path", "body_sha", "bytes", "estimated_tokens"],
+      "properties": {
+        "name":             { "$ref": "#/definitions/NameIdentifier" },
+        "purpose":          { "type": "string" },
+        "format":           { "type": "string" },
+        "description":      { "type": "string" },
+        "path":             { "type": "string" },
+        "body_sha":         { "$ref": "#/definitions/GitBlobSha" },
+        "bytes":            { "type": "integer", "minimum": 0 },
+        "estimated_tokens": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+
+    "Partition": {
+      "type": "object",
+      "required": ["schema_version", "category", "entries"],
+      "properties": {
+        "schema_version": { "type": "string", "const": "1.0" },
+        "category":       { "type": "string", "enum": ["skills", "docs", "prompts", "templates"] },
+        "entries":        { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+
+    "CategoryRef": {
+      "type": "object",
+      "required": ["path", "count", "bytes", "sha256"],
+      "properties": {
+        "path":   { "type": "string" },
+        "count":  { "type": "integer", "minimum": 0 },
+        "bytes":  { "type": "integer", "minimum": 0 },
+        "sha256": { "$ref": "#/definitions/Sha256Hex" }
+      },
+      "additionalProperties": false
+    },
+
+    "Manifest": {
+      "type": "object",
+      "required": ["schema_version", "source_sha", "source_branch", "generated_at", "categories"],
+      "properties": {
+        "schema_version": { "type": "string", "const": "1.0" },
+        "source_sha":     { "$ref": "#/definitions/GitBlobSha" },
+        "source_branch":  { "type": "string", "minLength": 1 },
+        "generated_at":   { "type": "string", "format": "date-time" },
+        "categories": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/CategoryRef" }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

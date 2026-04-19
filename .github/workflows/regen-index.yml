@@ -1,0 +1,57 @@
+name: regen-index
+
+on:
+  push:
+    branches-ignore: [index]
+    paths:
+      - 'skills/**'
+      - 'docs/**'
+      - 'prompts/**'
+      - 'templates/**'
+      - 'tools/**'
+      - 'INDEX-SCHEMA.json'
+      - 'package.json'
+      - 'package-lock.json'
+  workflow_dispatch: {}
+
+concurrency:
+  group: regen-index-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate-and-regen:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: install
+        run: npm ci
+
+      - name: typecheck
+        run: npm run typecheck
+
+      - name: validate entries (strict)
+        run: npm run check
+
+      - name: regen
+        run: npm run gen-index
+
+      - name: push to index branch
+        env:
+          GIT_AUTHOR_NAME: index-bot
+          GIT_AUTHOR_EMAIL: index-bot@users.noreply.github.com
+        run: |
+          chmod +x tools/push-index.sh
+          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          ./tools/push-index.sh
