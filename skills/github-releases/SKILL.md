@@ -12,7 +12,7 @@ args:
     required: true
     description: "owner/repo — e.g. microsoft/TypeScript"
   - name: count
-    type: integer
+    type: number
     required: false
     description: "How many releases to return. Defaults to 3. Max 20."
 requires: [curl, jq]
