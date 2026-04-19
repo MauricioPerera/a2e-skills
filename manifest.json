@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "source_sha": "3d654f668bf7d82a6665ffd0b20aa70dfe1c7f3a",
+  "source_branch": "main",
+  "generated_at": "2026-04-19T16:42:30.982Z",
+  "categories": {
+    "skills": {
+      "path": "skills.json",
+      "count": 2,
+      "bytes": 2082,
+      "sha256": "2b8ea192667f097c9e5217b2113f5bb0d37489d7977171a54641aa84150d1f80"
+    },
+    "docs": {
+      "path": "docs.json",
+      "count": 1,
+      "bytes": 534,
+      "sha256": "6335553f3c2b6697f9b064a1f35a01b7b7282b1fa965448af6f187f91cd1df7f"
+    },
+    "prompts": {
+      "path": "prompts.json",
+      "count": 1,
+      "bytes": 890,
+      "sha256": "9fc92145e37dcae7419a662a09b5d786836fa46eedf84ac55de52a74c7f53c86"
+    },
+    "templates": {
+      "path": "templates.json",
+      "count": 1,
+      "bytes": 601,
+      "sha256": "48fb8e57240ec8ee3579d30438c62c125ed256663d2627aaabee5b359239a67f"
+    }
+  }
+}

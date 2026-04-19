@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "category": "templates",
+  "entries": {
+    "example-email": {
+      "name": "example-email",
+      "purpose": "Follow-up customer email after a support ticket resolution",
+      "format": "markdown",
+      "description": "Placeholder template demonstrating the templates/ entry convention.\nUses {{customer_name}} and {{ticket_summary}} placeholders; interpolation is the caller's responsibility.\n",
+      "path": "templates/example-email.md",
+      "body_sha": "22983e063106350ea4416f54d6a88bc0bcb5e1cd",
+      "bytes": 533,
+      "estimated_tokens": 134
+    }
+  }
+}

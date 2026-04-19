@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "category": "docs",
+  "entries": {
+    "example-api": {
+      "name": "example-api",
+      "title": "Example HTTP API — reference",
+      "summary": "Illustrates the doc-entry convention; agents consume frontmatter for discovery and body on hydration.",
+      "topics": [
+        "example",
+        "http-api",
+        "reference"
+      ],
+      "path": "docs/example-api.md",
+      "body_sha": "f56fb8e7f14b67b5011aafc790238c0edac9f416",
+      "bytes": 548,
+      "estimated_tokens": 137
+    }
+  }
+}

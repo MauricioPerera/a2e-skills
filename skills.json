@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "category": "skills",
+  "entries": {
+    "example-echo": {
+      "name": "example-echo",
+      "when_to_use": "illustrates the SKILL convention; echoes a message with a UTC timestamp prefix",
+      "description": "Minimal skill provided as a reference implementation of the SKILL format.\nTakes one string argument and prints it prefixed with the current UTC timestamp.\nNot intended for production use by agents — delete when the repo has real content.\n",
+      "skill_path": "skills/example-echo",
+      "entry": "run.sh",
+      "entry_path": "skills/example-echo/run.sh",
+      "entry_sha": "3962d04779b77025eceac3be5f152b50a7616044",
+      "entry_bytes": 158,
+      "estimated_tokens": 40,
+      "args": [
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "description": "text to echo back"
+        }
+      ],
+      "requires": [
+        "date",
+        "printf"
+      ]
+    },
+    "github-releases": {
+      "name": "github-releases",
+      "when_to_use": "when the user asks for the latest release(s) of a GitHub repo — tag, publish date, release name",
+      "description": "Fetches the N most recent releases of a GitHub repository via the public releases API and formats tag, published_at, and name as a compact JSON array. Uses `jq` projection so the exec preview never overflows 2KB.\n",
+      "skill_path": "skills/github-releases",
+      "entry": "run.sh",
+      "entry_path": "skills/github-releases/run.sh",
+      "entry_sha": "3d4e2aba954059c0542ab19c0ef09f8acb39b41e",
+      "entry_bytes": 628,
+      "estimated_tokens": 157,
+      "args": [
+        {
+          "name": "repo",
+          "type": "string",
+          "required": true,
+          "description": "owner/repo — e.g. microsoft/TypeScript"
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "required": false,
+          "description": "How many releases to return. Defaults to 3. Max 20."
+        }
+      ],
+      "requires": [
+        "curl",
+        "jq"
+      ]
+    }
+  }
+}

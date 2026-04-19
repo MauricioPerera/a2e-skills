@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "category": "prompts",
+  "entries": {
+    "example-review": {
+      "name": "example-review",
+      "purpose": "Produce a structured review report from a unified diff",
+      "description": "Placeholder prompt demonstrating the prompts/ entry convention.\nTakes a diff and an optional focus area; produces a report with summary, concerns, and action items.\n",
+      "input_vars": [
+        {
+          "name": "diff",
+          "required": true,
+          "description": "unified diff of the change under review"
+        },
+        {
+          "name": "focus",
+          "required": false,
+          "description": "optional emphasis area such as security or performance"
+        }
+      ],
+      "path": "prompts/example-review.md",
+      "body_sha": "12a6a03cede05992f02408dd37621d1ff3f0d134",
+      "bytes": 642,
+      "estimated_tokens": 161
+    }
+  }
+}
