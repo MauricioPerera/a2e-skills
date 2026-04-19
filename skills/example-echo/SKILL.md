@@ -7,7 +7,10 @@ description: |
   Not intended for production use by agents — delete when the repo has real content.
 entry: run.sh
 args:
-  - { name: message, type: string, required: true, description: text to echo back }
+  - name: message
+    type: string
+    required: true
+    description: text to echo back
 requires: [date, printf]
 ---
 

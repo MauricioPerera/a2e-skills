@@ -20,9 +20,14 @@ import * as path from "node:path";
 import * as crypto from "node:crypto";
 import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
 import matter from "gray-matter";
-import Ajv, { type ValidateFunction } from "ajv";
-import addFormats from "ajv-formats";
+import type { ValidateFunction } from "ajv";
+
+const require_ = createRequire(import.meta.url);
+// Ajv and ajv-formats ship CJS only; interop under NodeNext strict is cleanest via createRequire.
+const Ajv = require_("ajv").default as typeof import("ajv").default;
+const addFormats = require_("ajv-formats").default as typeof import("ajv-formats").default;
 
 const REPO_ROOT = process.cwd();
 const OUT_DIR = process.env.INDEX_OUT_DIR ?? path.join(REPO_ROOT, ".index-out");

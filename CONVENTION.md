@@ -42,11 +42,19 @@ description: |
   Full LLM-readable description. Used when the agent hydrates the SKILL.
 entry: run.sh
 args:
-  - { name: order_id, type: string, required: true, description: Shopify order id }
-  - { name: reason,   type: string, required: false, description: refund reason note }
+  - name: order_id
+    type: string
+    required: true
+    description: Shopify order id
+  - name: reason
+    type: string
+    required: false
+    description: refund reason note
 requires: [curl, jq]
 ---
 ```
+
+**Always use YAML block-style for arrays of objects.** Flow-style (`{name: x, description: y}`) breaks when any string contains a `,` or `(...)` and will produce silent mis-parses that our schema rejects.
 
 Rules:
 
